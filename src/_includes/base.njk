@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title %}{{ title }} · {% endif %}{{ site.name }}</title>
+  <meta name="description" content="{{ description or site.description }}">
+  <script>
+    (function () {
+      var stored = localStorage.getItem("theme");
+      var theme = stored || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎧</text></svg>">
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="site-logo" href="/">
+      <span class="logo-mark" aria-hidden="true">◉</span>
+      <span class="logo-text">{{ site.name }}</span>
+    </a>
+    <button class="theme-toggle" type="button" aria-label="Toggle light/dark theme">
+      <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true">☀</span>
+      <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true">☾</span>
+    </button>
+  </header>
+
+  <main class="site-main">
+    {{ content | safe }}
+  </main>
+
+  <footer class="site-footer">
+    <p>Know an open decks night that's missing?</p>
+    <div class="submission-actions">
+      <a class="btn btn-primary" href="{{ site.repoUrl }}">Add it with a pull request</a>
+      <a class="btn btn-outline" href="mailto:{{ site.submissionEmail }}?subject=New%20open%20decks%20event%20submission">Submit by email</a>
+    </div>
+    <p class="footer-fineprint">{{ site.name }} · community-maintained · no cover, just decks</p>
+  </footer>
+
+  <script src="/js/theme.js"></script>
+  <script src="/js/reveal.js"></script>
+  <script src="/js/genre-filter.js"></script>
+  <script src="/js/globe.js"></script>
+  <script src="/js/search.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+---
+layout: base.njk
+pagination:
+  data: collections.cityPages
+  size: 1
+  alias: city
+permalink: "{{ city.url }}"
+eleventyComputed:
+  title: "{{ city.name }}"
+---
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="/">Home</a> <span aria-hidden="true">/</span>
+  <a href="{{ city.continentUrl }}">{{ city.continentName }}</a> <span aria-hidden="true">/</span>
+  <a href="{{ city.countryUrl }}">{{ city.countryName }}</a> <span aria-hidden="true">/</span>
+  {% if city.stateName %}<a href="{{ city.stateUrl }}">{{ city.stateName }}</a> <span aria-hidden="true">/</span>{% endif %}
+  <span>{{ city.name }}</span>
+</nav>
+
+<h1 class="neon-title">{{ city.name }}</h1>
+<p class="page-intro">{{ city.eventCount }} active open decks event{% if city.eventCount != 1 %}s{% endif %} in {{ city.name }}{% if city.stateName %}, {{ city.stateName }}{% endif %}, {{ city.countryName }}.</p>
+
+{% if city.genres.length > 1 %}
+  <div class="genre-filter" data-city-genre-filter role="group" aria-label="Filter by genre">
+    <button type="button" class="filter-chip is-active" data-genre="all">All</button>
+    {% for genre in city.genres %}
+      <button type="button" class="filter-chip" data-genre="{{ genre | slug }}">{{ genre }}</button>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% for venue in city.venues %}
+  <section class="continent-section">
+    <h2 class="section-title"><a href="{{ venue.url }}">{{ venue.name }}</a></h2>
+    <div class="card-grid">
+      {% for event in venue.events %}
+        {% set cardVenueName = venue.name %}
+        {% set cardCityName = city.name %}
+        {% set cardStateName = city.stateName %}
+        {% set cardCountryName = city.countryName %}
+        {% include "event-card.njk" %}
+      {% endfor %}
+    </div>
+  </section>
+{% endfor %}

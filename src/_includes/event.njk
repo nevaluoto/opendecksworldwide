@@ -1,0 +1,66 @@
+---
+layout: base.njk
+---
+{% set venuePage = collections.venues | venueFor(page.filePathStem) %}
+{% set vd = venuePage.data %}
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="/">Home</a> <span aria-hidden="true">/</span>
+  <a href="/{{ locations.continent }}/">{{ vd.continent }}</a> <span aria-hidden="true">/</span>
+  <a href="/{{ locations.continent }}/{{ locations.country }}/">{{ vd.country }}</a> <span aria-hidden="true">/</span>
+  {% if locations.state %}<a href="/{{ locations.continent }}/{{ locations.country }}/{{ locations.state }}/">{{ vd.state }}</a> <span aria-hidden="true">/</span>{% endif %}
+  <a href="/{{ locations.continent }}/{{ locations.country }}/{% if locations.state %}{{ locations.state }}/{% endif %}{{ locations.city }}/">{{ vd.city }}</a> <span aria-hidden="true">/</span>
+  <a href="{{ venuePage.url }}">{{ vd.name }}</a>
+</nav>
+
+<article class="event-page reveal">
+  <header class="event-header">
+    <h1 class="neon-title">{{ title }}</h1>
+    <p class="event-subtitle"><a href="{{ venuePage.url }}">{{ vd.name }}</a> · {{ vd.city }}{% if vd.state %}, {{ vd.state }}{% endif %}, {{ vd.country }}</p>
+  </header>
+
+  <dl class="event-details">
+    {% if recurrence %}
+      <div><dt>When</dt><dd>{{ recurrence }}{% if date %} · next: {{ date | eventDate }}{% endif %}{% if time %} · {{ time }}{% endif %}</dd></div>
+    {% elif date %}
+      <div><dt>When</dt><dd>{{ date | eventDate }}{% if time %} · {{ time }}{% endif %}</dd></div>
+    {% elif time %}
+      <div><dt>When</dt><dd>{{ time }}</dd></div>
+    {% endif %}
+    <div><dt>Where</dt><dd>
+      <a href="{{ venuePage.url }}">{{ vd.name }}</a>{% if vd.address %} — {{ vd.address }}{% endif %}{% if vd.osm %} · <a href="{{ vd.osm }}">map</a>{% endif %}
+    </dd></div>
+    {% if genres %}
+      <div><dt>Genres</dt><dd><ul class="genre-list">{% for genre in genres %}<li>{{ genre }}</li>{% endfor %}</ul></dd></div>
+    {% endif %}
+    {% if gear or vd.gear %}
+      <div><dt>Gear</dt><dd>{{ gear or vd.gear }}</dd></div>
+    {% endif %}
+    {% if signup %}
+      <div><dt>Sign-up</dt><dd>{% if signup | isUrl %}<a href="{{ signup }}">{{ signup }}</a>{% else %}{{ signup }}{% endif %}</dd></div>
+    {% endif %}
+    {% if cost %}
+      <div><dt>Cost</dt><dd>{{ cost }}</dd></div>
+    {% endif %}
+    {% if age %}
+      <div><dt>Age</dt><dd>{{ age }}</dd></div>
+    {% endif %}
+    {% if links %}
+      <div><dt>Links</dt><dd class="link-row">
+        {% for label, url in links %}<a href="{{ url }}">{{ label }}</a>{% endfor %}
+      </dd></div>
+    {% endif %}
+    {% if contact or vd.contact %}
+      <div><dt>Contact</dt><dd>{{ contact or vd.contact }}</dd></div>
+    {% endif %}
+  </dl>
+
+  {% if content | trim %}
+    <div class="event-body">
+      {{ content | safe }}
+    </div>
+  {% endif %}
+
+  <p class="venue-link-note">More about the venue, including a map:
+    <a href="{{ venuePage.url }}">{{ vd.name }} →</a></p>
+</article>

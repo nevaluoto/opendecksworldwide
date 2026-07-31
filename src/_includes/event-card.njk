@@ -1,0 +1,18 @@
+{# Expects `event` (an Eleventy template object for one event) plus
+   `cardVenueName`, `cardCityName`, `cardStateName`, `cardCountryName` set by the caller. #}
+<a class="event-card reveal" href="{{ event.url }}" data-genres="{{ event.data.genres | genreSlugs }}">
+  <div class="event-card-head">
+    <h3 class="event-card-title">{{ event.data.title }}</h3>
+    {% if event.data.recurrence %}
+      <span class="badge badge-recurring">{{ event.data.recurrence }}</span>
+    {% elif event.data.date %}
+      <span class="badge badge-date">{{ event.data.date | eventDate }}</span>
+    {% endif %}
+  </div>
+  <p class="event-card-venue">{{ cardVenueName }} · {{ cardCityName }}{% if cardStateName %}, {{ cardStateName }}{% endif %}, {{ cardCountryName }}</p>
+  {% if event.data.genres %}
+    <ul class="genre-list">
+      {% for genre in event.data.genres %}<li>{{ genre }}</li>{% endfor %}
+    </ul>
+  {% endif %}
+</a>

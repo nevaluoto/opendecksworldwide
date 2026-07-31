@@ -1,0 +1,69 @@
+---
+layout: base.njk
+---
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="/">Home</a> <span aria-hidden="true">/</span>
+  <a href="/{{ locations.continent }}/">{{ continent }}</a> <span aria-hidden="true">/</span>
+  <a href="/{{ locations.continent }}/{{ locations.country }}/">{{ country }}</a> <span aria-hidden="true">/</span>
+  {% if locations.state %}<a href="/{{ locations.continent }}/{{ locations.country }}/{{ locations.state }}/">{{ state }}</a> <span aria-hidden="true">/</span>{% endif %}
+  <a href="/{{ locations.continent }}/{{ locations.country }}/{% if locations.state %}{{ locations.state }}/{% endif %}{{ locations.city }}/">{{ city }}</a> <span aria-hidden="true">/</span>
+  <span>{{ name }}</span>
+</nav>
+
+<article class="event-page reveal">
+  <header class="event-header">
+    <h1 class="neon-title">{{ name }}</h1>
+    <p class="event-subtitle">{{ city }}{% if state %}, {{ state }}{% endif %}, {{ country }}</p>
+  </header>
+
+  <dl class="event-details">
+    {% if address %}
+      <div><dt>Address</dt><dd>{{ address }}{% if osm %} · <a href="{{ osm }}">map</a>{% endif %}</dd></div>
+    {% endif %}
+    {% if gear %}
+      <div><dt>Gear</dt><dd>{{ gear }}</dd></div>
+    {% endif %}
+    {% if links %}
+      <div><dt>Links</dt><dd class="link-row">
+        {% for label, url in links %}<a href="{{ url }}">{{ label }}</a>{% endfor %}
+      </dd></div>
+    {% endif %}
+    {% if contact %}
+      <div><dt>Contact</dt><dd>{{ contact }}</dd></div>
+    {% endif %}
+  </dl>
+
+  {% if lat and lon %}
+    <div class="map-embed">
+      <iframe
+        title="Map showing {{ name }}"
+        src="https://www.openstreetmap.org/export/embed.html?bbox={{ lon - 0.004 }}%2C{{ lat - 0.002 }}%2C{{ lon + 0.004 }}%2C{{ lat + 0.002 }}&layer=mapnik&marker={{ lat }}%2C{{ lon }}"
+        loading="lazy"></iframe>
+      <p class="map-link"><a href="https://www.openstreetmap.org/?mlat={{ lat }}&mlon={{ lon }}#map=17/{{ lat }}/{{ lon }}">View larger map on OpenStreetMap</a></p>
+    </div>
+  {% endif %}
+
+  {% if content | trim %}
+    <div class="event-body">
+      {{ content | safe }}
+    </div>
+  {% endif %}
+
+  {% set venueEvents = collections.activeEvents | eventsAtVenue(page.filePathStem) %}
+  <section class="venue-events">
+    <h2 class="section-title">Open decks at {{ name }}</h2>
+    {% if venueEvents.length %}
+      <div class="card-grid">
+        {% for event in venueEvents %}
+          {% set cardVenueName = name %}
+          {% set cardCityName = city %}
+          {% set cardStateName = state %}
+          {% set cardCountryName = country %}
+          {% include "event-card.njk" %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-note">No active open decks events at this venue right now.</p>
+    {% endif %}
+  </section>
+</article>

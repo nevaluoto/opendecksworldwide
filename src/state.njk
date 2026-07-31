@@ -1,0 +1,36 @@
+---
+layout: base.njk
+pagination:
+  data: collections.statePages
+  size: 1
+  alias: state
+permalink: "{{ state.url }}"
+eleventyComputed:
+  title: "{{ state.name }}, {{ state.countryName }}"
+---
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="/">Home</a> <span aria-hidden="true">/</span>
+  <a href="{{ state.continentUrl }}">{{ state.continentName }}</a> <span aria-hidden="true">/</span>
+  <a href="{{ state.countryUrl }}">{{ state.countryName }}</a> <span aria-hidden="true">/</span>
+  <span>{{ state.name }}</span>
+</nav>
+
+<h1 class="neon-title">{{ state.name }}</h1>
+<p class="page-intro">{{ state.eventCount }} active open decks event{% if state.eventCount != 1 %}s{% endif %} in {{ state.name }}, {{ state.countryName }}.</p>
+
+{% for city in state.cities %}
+  <section class="continent-section">
+    <h2 class="section-title"><a href="{{ city.url }}">{{ city.name }}</a></h2>
+    <div class="card-grid">
+      {% for venue in city.venues %}
+        {% for event in venue.events %}
+          {% set cardVenueName = venue.name %}
+          {% set cardCityName = city.name %}
+          {% set cardStateName = state.name %}
+          {% set cardCountryName = state.countryName %}
+          {% include "event-card.njk" %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </section>
+{% endfor %}

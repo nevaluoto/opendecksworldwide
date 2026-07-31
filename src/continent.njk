@@ -1,0 +1,38 @@
+---
+layout: base.njk
+pagination:
+  data: collections.continentPages
+  size: 1
+  alias: continent
+permalink: "{{ continent.url }}"
+eleventyComputed:
+  title: "{{ continent.name }}"
+---
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="/">Home</a> <span aria-hidden="true">/</span> <span>{{ continent.name }}</span>
+</nav>
+
+<h1 class="neon-title">{{ continent.name }}</h1>
+<p class="page-intro">{{ continent.eventCount }} active open decks event{% if continent.eventCount != 1 %}s{% endif %}.</p>
+
+{% for country in continent.countries %}
+  <section class="continent-section">
+    <h2 class="section-title"><a href="{{ country.url }}">{{ country.name }}</a>
+      <span class="count-pill">{{ country.eventCount }}</span>
+    </h2>
+    {% for city in country.allCities %}
+      <h3 class="city-title"><a href="{{ city.url }}">{{ city.name }}</a>{% if city.stateName %}<span class="city-country">, <a href="{{ city.stateUrl }}">{{ city.stateName }}</a></span>{% endif %}</h3>
+      <div class="card-grid">
+        {% for venue in city.venues %}
+          {% for event in venue.events %}
+            {% set cardVenueName = venue.name %}
+            {% set cardCityName = city.name %}
+            {% set cardStateName = city.stateName %}
+            {% set cardCountryName = country.name %}
+            {% include "event-card.njk" %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </section>
+{% endfor %}

@@ -1,0 +1,51 @@
+---
+layout: base.njk
+permalink: /
+---
+<section class="hero hero-with-globe">
+  <div class="globe-wrap" aria-hidden="true">
+    <canvas id="globe-canvas" width="720" height="720"></canvas>
+  </div>
+  <div class="hero-content">
+    <h1 class="neon-title hero-title">Open decks,<br>everywhere.</h1>
+    <p class="hero-tagline">{{ site.tagline }}</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-number">{{ collections.siteStats.events }}</span>
+        <span class="stat-label">event{% if collections.siteStats.events != 1 %}s{% endif %}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">{{ collections.siteStats.countries }}</span>
+        <span class="stat-label">countr{% if collections.siteStats.countries != 1 %}ies{% else %}y{% endif %}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">{{ collections.siteStats.continents }}</span>
+        <span class="stat-label">continent{% if collections.siteStats.continents != 1 %}s{% endif %}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="search-section">
+  <div class="search-bar">
+    <input type="search" id="event-search" placeholder="Search city, country, or venue…" aria-label="Search events">
+    <button type="button" id="near-me-btn" class="btn btn-outline">📍 Near me</button>
+  </div>
+  <p id="search-status" class="search-status" aria-live="polite"></p>
+  <div id="search-results" class="card-grid search-results"></div>
+</section>
+
+{% if collections.eventTree.length == 0 %}
+  <p class="empty-note">No active events yet — be the first to <a href="{{ site.repoUrl }}">add one</a>.</p>
+{% else %}
+  <section class="browse-section">
+    <h2 class="section-title-sm">Browse by continent</h2>
+    <div class="chip-row">
+      {% for continent in collections.eventTree %}
+        <a class="filter-chip" href="{{ continent.url }}">{{ continent.name }} <span class="count-pill">{{ continent.eventCount }}</span></a>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+
+<script>window.__globeDots = {{ collections.mapDots | json | safe }};</script>
