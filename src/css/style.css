@@ -17,6 +17,7 @@
   --bg: #0a0a12;
   --bg-raised: #12121f;
   --bg-card: rgba(255, 255, 255, 0.03);
+  --input-bg: #1b1b2b;
   --border: rgba(255, 255, 255, 0.1);
   --text: #e8e8f0;
   --text-muted: #9a9ab0;
@@ -30,6 +31,7 @@
   --bg: #f7f7fb;
   --bg-raised: #ffffff;
   --bg-card: rgba(255, 255, 255, 0.75);
+  --input-bg: #e7e7ee;
   --border: rgba(20, 20, 45, 0.12);
   --text: #17172b;
   --text-muted: #5d5d75;
@@ -40,16 +42,21 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; min-height: 100%; }
 
 body {
   margin: 0;
   font-family: var(--font-body);
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
-  transition: background 0.3s ease, color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  /* No transition here: transitioning a background-color that's supplied by a
+     custom property changing via an ancestor's [data-theme] attribute fails
+     to settle to the new value in some engines — it visibly snaps instead,
+     which is reliable everywhere rather than silently stuck on some browsers. */
 }
 
 /* Ambient background glow blobs */
@@ -79,9 +86,10 @@ p a:hover, dd a:hover { background-size: 100% 100%; -webkit-background-clip: ini
 
 /* ------------------------------------------------------------------ layout */
 
-.site-header, .site-main, .site-footer {
+.site-header, .site-main {
   width: min(var(--max-width), 100% - 2.5rem);
   margin-inline: auto;
+  flex-shrink: 0;
 }
 
 .site-header {
@@ -111,15 +119,30 @@ p a:hover, dd a:hover { background-size: 100% 100%; -webkit-background-clip: ini
   animation: pulse-glow 3.5s ease-in-out infinite;
 }
 
-.site-main { padding-block: 1rem 4rem; }
+.site-main {
+  padding-block: 1rem 2rem;
+  flex: 1 0 auto;
+}
 
 .site-footer {
+  width: 100%;
+  flex-shrink: 0;
   border-top: 1px solid var(--border);
-  padding-block: 2rem 2.5rem;
   color: var(--text-muted);
   font-size: 0.92rem;
 }
-.footer-fineprint { font-size: 0.8rem; opacity: 0.7; }
+.footer-inner {
+  width: min(var(--max-width), 100% - 2.5rem);
+  margin-inline: auto;
+  padding-block: 2.5rem;
+}
+.footer-fineprint {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
 
 .submission-actions {
   display: flex;
@@ -145,7 +168,7 @@ p a:hover, dd a:hover { background-size: 100% 100%; -webkit-background-clip: ini
 .btn-primary:hover { box-shadow: var(--card-glow); }
 .btn-outline {
   border: 1px solid var(--border);
-  background: var(--bg-card);
+  background-color: var(--input-bg);
   color: var(--text);
 }
 .btn-outline:hover { border-color: color-mix(in srgb, var(--accent-cyan) 50%, var(--border)); box-shadow: var(--card-glow); }
@@ -233,7 +256,7 @@ p a:hover, dd a:hover { background-size: 100% 100%; -webkit-background-clip: ini
   align-items: center;
   padding: 0.4rem;
   border: 1px solid var(--border);
-  background: var(--bg-card);
+  background-color: var(--input-bg);
   border-radius: 999px;
   box-shadow: var(--card-glow);
 }
@@ -375,12 +398,12 @@ h1.neon-title { font-size: clamp(1.9rem, 5vw, 3rem); margin: 0.5rem 0 0.25rem; }
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: var(--bg-card);
+  background-color: var(--input-bg);
   color: var(--text-muted);
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.25s ease, background 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.25s ease;
 }
 .filter-chip:hover { color: var(--text); border-color: color-mix(in srgb, var(--accent-cyan) 45%, var(--border)); }
 .filter-chip.is-active {

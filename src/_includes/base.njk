@@ -33,12 +33,14 @@
   </main>
 
   <footer class="site-footer">
-    <p>Know an open decks night that's missing?</p>
-    <div class="submission-actions">
-      <a class="btn btn-primary" href="{{ site.repoUrl }}">Add it with a pull request</a>
-      <a class="btn btn-outline" href="mailto:{{ site.submissionEmail }}?subject=New%20open%20decks%20event%20submission">Submit by email</a>
+    <div class="footer-inner">
+      <p>Know an open decks night that's missing?</p>
+      <div class="submission-actions">
+        <a class="btn btn-primary" href="{{ site.repoUrl }}">Add it with a pull request</a>
+        <a class="btn btn-outline" href="mailto:{{ site.submissionEmail }}?subject=New%20open%20decks%20event%20submission">Submit by email</a>
+      </div>
+      <p class="footer-fineprint">{{ site.name }} · community-maintained · no cover, just decks</p>
     </div>
-    <p class="footer-fineprint">{{ site.name }} · community-maintained · no cover, just decks</p>
   </footer>
 
   <script src="/js/theme.js"></script>
