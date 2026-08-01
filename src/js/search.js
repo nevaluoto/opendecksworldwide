@@ -1,4 +1,5 @@
 (function () {
+  var NEAR_ME_RADIUS_KM = 150;
   var input = document.getElementById("event-search");
   var results = document.getElementById("search-results");
   var status = document.getElementById("search-status");
@@ -108,22 +109,25 @@
         function (pos) {
           load().then(function (items) {
             var here = pos.coords;
-            var withCoords = items.filter(function (i) { return i.lat != null && i.lon != null; });
-            withCoords.forEach(function (i) {
-              i._distance = haversineKm(here.latitude, here.longitude, i.lat, i.lon);
-            });
-            withCoords.sort(function (a, b) { return a._distance - b._distance; });
+            var nearby = items
+              .filter(function (i) { return i.lat != null && i.lon != null; })
+              .map(function (i) {
+                i._distance = haversineKm(here.latitude, here.longitude, i.lat, i.lon);
+                return i;
+              })
+              .filter(function (i) { return i._distance <= NEAR_ME_RADIUS_KM; })
+              .sort(function (a, b) { return a._distance - b._distance; });
 
             var distances = {};
-            withCoords.forEach(function (i) {
+            nearby.forEach(function (i) {
               distances[i.url] = Math.round(i._distance) + " km away";
             });
 
             input.value = "";
-            render(withCoords.slice(0, 12), {
+            render(nearby.slice(0, 12), {
               distances: distances,
-              statusSuffix: " near you",
-              emptyMessage: "No events with a known location yet — check back as more venues add map coordinates.",
+              statusSuffix: " within " + NEAR_ME_RADIUS_KM + " km",
+              emptyMessage: "No events within " + NEAR_ME_RADIUS_KM + " km of you yet.",
             });
           });
         },
