@@ -357,6 +357,23 @@ h1.neon-title { font-size: clamp(1.9rem, 5vw, 3rem); margin: 0.5rem 0 0.25rem; }
 .city-country { color: var(--text-muted); font-weight: 400; }
 .city-country a { color: var(--text-muted); }
 
+.state-group {
+  margin: 1.4rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--border);
+}
+.state-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+}
+.state-heading a { color: var(--text); }
+.state-heading a:hover { color: var(--accent-cyan); }
+.state-group .city-title { margin-top: 0.9rem; font-size: 1rem; }
+
 /* ------------------------------------------------------------ event cards */
 
 .card-grid {

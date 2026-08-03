@@ -20,14 +20,32 @@ eleventyComputed:
     <h2 class="section-title"><a href="{{ country.url }}">{{ country.name }}</a>
       <span class="count-pill">{{ country.eventCount }}</span>
     </h2>
-    {% for city in country.allCities %}
-      <h3 class="city-title"><a href="{{ city.url }}">{{ city.name }}</a>{% if city.stateName %}<span class="city-country">, <a href="{{ city.stateUrl }}">{{ city.stateName }}</a></span>{% endif %}</h3>
+    {% for state in country.states %}
+      <div class="state-group">
+        <h3 class="state-heading"><a href="{{ state.url }}">{{ state.name }}</a> <span class="count-pill">{{ state.eventCount }}</span></h3>
+        {% for city in state.cities %}
+          <h4 class="city-title"><a href="{{ city.url }}">{{ city.name }}</a></h4>
+          <div class="card-grid">
+            {% for venue in city.venues %}
+              {% for event in venue.events %}
+                {% set cardVenueName = venue.name %}
+                {% set cardCityName = city.name %}
+                {% set cardStateName = state.name %}
+                {% set cardCountryName = country.name %}
+                {% include "event-card.njk" %}
+              {% endfor %}
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    {% for city in country.cities %}
+      <h3 class="city-title"><a href="{{ city.url }}">{{ city.name }}</a></h3>
       <div class="card-grid">
         {% for venue in city.venues %}
           {% for event in venue.events %}
             {% set cardVenueName = venue.name %}
             {% set cardCityName = city.name %}
-            {% set cardStateName = city.stateName %}
             {% set cardCountryName = country.name %}
             {% include "event-card.njk" %}
           {% endfor %}

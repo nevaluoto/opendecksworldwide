@@ -26,6 +26,28 @@ eleventyComputed:
       {% endfor %}
     </ul>
   </section>
+
+  {% for state in country.states %}
+    <section class="continent-section">
+      <h2 class="section-title"><a href="{{ state.url }}">{{ state.name }}</a>
+        <span class="count-pill">{{ state.eventCount }}</span>
+      </h2>
+      {% for city in state.cities %}
+        <h3 class="city-title"><a href="{{ city.url }}">{{ city.name }}</a></h3>
+        <div class="card-grid">
+          {% for venue in city.venues %}
+            {% for event in venue.events %}
+              {% set cardVenueName = venue.name %}
+              {% set cardCityName = city.name %}
+              {% set cardStateName = state.name %}
+              {% set cardCountryName = country.name %}
+              {% include "event-card.njk" %}
+            {% endfor %}
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </section>
+  {% endfor %}
 {% endif %}
 
 {% for city in country.cities %}
