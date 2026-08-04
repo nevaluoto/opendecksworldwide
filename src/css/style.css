@@ -17,6 +17,10 @@
   --bg: #0a0a12;
   --bg-raised: #12121f;
   --bg-card: rgba(255, 255, 255, 0.03);
+  /* More opaque than --bg-card: used for surfaces that sit directly over the
+     dense center of the hero globe (search bar, browse chips), which needs
+     more coverage than a card elsewhere on the page to stay readable. */
+  --surface-solid: rgba(20, 20, 34, 0.92);
   --input-bg: #1b1b2b;
   --border: rgba(255, 255, 255, 0.1);
   --text: #e8e8f0;
@@ -31,6 +35,7 @@
   --bg: #f7f7fb;
   --bg-raised: #ffffff;
   --bg-card: rgba(255, 255, 255, 0.75);
+  --surface-solid: rgba(255, 255, 255, 0.94);
   --input-bg: #e7e7ee;
   --border: rgba(20, 20, 45, 0.12);
   --text: #17172b;
@@ -95,28 +100,8 @@ p a:hover, dd a:hover { background-size: 100% 100%; -webkit-background-clip: ini
 .site-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding-block: 1.25rem;
-}
-
-.site-logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  font-size: 1.05rem;
-  color: var(--text);
-  text-transform: uppercase;
-}
-
-.logo-mark {
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-size: 1.3rem;
-  animation: pulse-glow 3.5s ease-in-out infinite;
 }
 
 .site-main {
@@ -144,6 +129,52 @@ p a:hover, dd a:hover { background-size: 100% 100%; -webkit-background-clip: ini
   border-top: 1px solid var(--border);
 }
 
+.recent-ticker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.recent-ticker-label {
+  flex-shrink: 0;
+  line-height: 1.4;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.recent-ticker-viewport {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 1.4em;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+.recent-ticker-item {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.recent-ticker-item.is-active { opacity: 1; }
+.recent-ticker-item:hover { color: var(--accent-cyan); }
+
+@media (max-width: 30rem) {
+  .recent-ticker { flex-direction: column; align-items: flex-start; gap: 0.35rem; }
+}
+
 .submission-actions {
   display: flex;
   flex-wrap: wrap;
@@ -158,7 +189,8 @@ p a:hover, dd a:hover { background-size: 100% 100%; -webkit-background-clip: ini
   border-radius: 999px;
   font-size: 0.88rem;
   font-weight: 600;
-  transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  /* No border-color transition — see .filter-chip comment above. */
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
 }
 .btn:hover { transform: translateY(-2px); }
 .btn-primary {
@@ -256,7 +288,7 @@ p a:hover, dd a:hover { background-size: 100% 100%; -webkit-background-clip: ini
   align-items: center;
   padding: 0.4rem;
   border: 1px solid var(--border);
-  background-color: var(--input-bg);
+  background: var(--surface-solid);
   border-radius: 999px;
   box-shadow: var(--card-glow);
 }
@@ -415,12 +447,16 @@ h1.neon-title { font-size: clamp(1.9rem, 5vw, 3rem); margin: 0.5rem 0 0.25rem; }
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background-color: var(--input-bg);
+  background: var(--surface-solid);
   color: var(--text-muted);
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.25s ease;
+  /* No color/border-color transition: both are base (always-applied)
+     properties sourced from theme-swapped custom properties, and transitions
+     on such properties get stuck on the old theme after a runtime toggle in
+     some engines — see the body/event-card fix for the full explanation. */
+  transition: box-shadow 0.25s ease;
 }
 .filter-chip:hover { color: var(--text); border-color: color-mix(in srgb, var(--accent-cyan) 45%, var(--border)); }
 .filter-chip.is-active {
@@ -442,7 +478,8 @@ h1.neon-title { font-size: clamp(1.9rem, 5vw, 3rem); margin: 0.5rem 0 0.25rem; }
   color: var(--text);
   position: relative;
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  /* No border-color transition — see .filter-chip comment above. */
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
 }
 .event-card::before {
   content: "";
@@ -540,15 +577,11 @@ h1.neon-title { font-size: clamp(1.9rem, 5vw, 3rem); margin: 0.5rem 0 0.25rem; }
 
 /* -------------------------------------------------------------- animation */
 
-@keyframes pulse-glow {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(232, 121, 249, 0.6)); }
-  50% { filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.9)); }
-}
-
 .reveal {
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  /* No border-color transition — see .filter-chip comment above. */
+  transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.3s ease;
 }
 .reveal.is-visible { opacity: 1; transform: none; }
 .reveal.is-visible:hover { transform: translateY(-4px); }
@@ -557,7 +590,6 @@ article.reveal.is-visible:hover { transform: none; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .logo-mark { animation: none; }
   .event-card, .theme-toggle { transition: none; }
   .event-card:hover, .theme-toggle:hover { transform: none; }
 }

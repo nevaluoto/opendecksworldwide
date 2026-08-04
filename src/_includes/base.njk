@@ -18,10 +18,6 @@
 <body>
   <div class="bg-glow" aria-hidden="true"></div>
   <header class="site-header">
-    <a class="site-logo" href="/">
-      <span class="logo-mark" aria-hidden="true">◉</span>
-      <span class="logo-text">{{ site.name }}</span>
-    </a>
     <button class="theme-toggle" type="button" aria-label="Toggle light/dark theme">
       <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true">☀</span>
       <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true">☾</span>
@@ -34,6 +30,16 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
+      {% if collections.recentAdditions.length %}
+        <div class="recent-ticker">
+          <span class="recent-ticker-label">Recently added</span>
+          <div class="recent-ticker-viewport">
+            {% for item in collections.recentAdditions %}
+              <a class="recent-ticker-item{% if loop.first %} is-active{% endif %}" href="{{ item.url }}">{{ item.title }} — {{ item.city }}, {{ item.country }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
       <p>Know an open decks night that's missing?</p>
       <div class="submission-actions">
         <a class="btn btn-primary" href="{{ site.repoUrl }}">Add it with a pull request</a>
@@ -48,5 +54,6 @@
   <script src="/js/genre-filter.js"></script>
   <script src="/js/globe.js"></script>
   <script src="/js/search.js"></script>
+  <script src="/js/recent-ticker.js"></script>
 </body>
 </html>

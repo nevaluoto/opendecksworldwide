@@ -245,6 +245,31 @@ function buildSearchIndex(api) {
     .sort((a, b) => a.title.localeCompare(b.title));
 }
 
+// The 3 most recently added active events, for the footer "Recently added"
+// ticker (shown on every page, so this has to be a global collection rather
+// than something computed inline on the homepage template).
+function buildRecentAdditions(api) {
+  const venueByDir = getVenueMap(api);
+  const events = api
+    .getFilteredByGlob("./events/**/*.md")
+    .filter((e) => e.fileSlug !== "venue" && isActive(e.data) && e.data.added);
+
+  return events
+    .map((event) => {
+      const venueDoc = venueByDir.get(venueDir(event.filePathStem));
+      const vd = venueDoc ? venueDoc.data : {};
+      return {
+        title: event.data.title,
+        url: event.url,
+        city: vd.city || null,
+        country: vd.country || null,
+        added: event.data.added,
+      };
+    })
+    .sort((a, b) => b.added.getTime() - a.added.getTime())
+    .slice(0, 3);
+}
+
 // Rough city-level dot for every venue that has both an active event and
 // coordinates, for the homepage globe.
 function collectMapDots(continents) {
@@ -332,6 +357,7 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addCollection("searchIndex", (api) => buildSearchIndex(api));
   eleventyConfig.addCollection("mapDots", (api) => collectMapDots(buildTree(api)));
+  eleventyConfig.addCollection("recentAdditions", (api) => buildRecentAdditions(api));
 
   // Computed once and cached — the topology never changes within a build.
   let countryBordersCache;

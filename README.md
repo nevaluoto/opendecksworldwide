@@ -4,7 +4,7 @@ A community-maintained directory of **open decks DJ events** around the world.
 Every venue and event is a markdown file; the site is a static build generated
 with [Eleventy](https://www.11ty.dev/) — no database, no backend.
 
-Repo: http://192.168.0.20:3333/nevaluoto/opendecksglobal
+Repo: https://github.com/nevaluoto/opendecksworldwide
 
 ## What's on the site
 
@@ -55,7 +55,7 @@ which produces `/north-america/united-states/ny/` (state index) and
    genres, sign-up, cost) — the rest is inherited from `venue.md`.
 
 3. Open a pull request — or email a submission to the address in the footer
-   if you'd rather not use git directly (placeholder address for now).
+   if you'd rather not use git directly.
 
 ## How visibility works
 
