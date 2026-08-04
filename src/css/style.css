@@ -128,6 +128,37 @@ p a:hover, dd a:hover { background-size: 100% 100%; -webkit-background-clip: ini
   padding-top: 1.5rem;
   border-top: 1px solid var(--border);
 }
+.footer-legal-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.footer-legal-links a { color: var(--text-muted); }
+.footer-legal-links a:hover { color: var(--accent-cyan); }
+
+.legal-page {
+  max-width: 44rem;
+  margin-inline: auto;
+  color: var(--text);
+}
+.legal-page .legal-updated {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: -0.5rem;
+  margin-bottom: 2rem;
+}
+.legal-page h2 {
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.15rem;
+}
+.legal-page p, .legal-page ul, .legal-page ol {
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+.legal-page ul, .legal-page ol { padding-left: 1.25rem; }
+.legal-page a { color: var(--accent-cyan); }
 
 .recent-ticker {
   display: flex;
@@ -169,7 +200,6 @@ p a:hover, dd a:hover { background-size: 100% 100%; -webkit-background-clip: ini
   transition: opacity 0.5s ease;
 }
 .recent-ticker-item.is-active { opacity: 1; }
-.recent-ticker-item:hover { color: var(--accent-cyan); }
 
 @media (max-width: 30rem) {
   .recent-ticker { flex-direction: column; align-items: flex-start; gap: 0.35rem; }

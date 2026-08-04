@@ -35,7 +35,7 @@
           <span class="recent-ticker-label">Recently added</span>
           <div class="recent-ticker-viewport">
             {% for item in collections.recentAdditions %}
-              <a class="recent-ticker-item{% if loop.first %} is-active{% endif %}" href="{{ item.url }}">{{ item.title }} — {{ item.city }}, {{ item.country }}</a>
+              <span class="recent-ticker-item{% if loop.first %} is-active{% endif %}">{{ item.venue }} — {{ item.title }} · {{ item.city }}, {{ item.country }}</span>
             {% endfor %}
           </div>
         </div>
@@ -46,6 +46,7 @@
         <a class="btn btn-outline" href="mailto:{{ site.submissionEmail }}?subject=New%20open%20decks%20event%20submission">Submit by email</a>
       </div>
       <p class="footer-fineprint">{{ site.name }} · community-maintained · no cover, just decks</p>
+      <p class="footer-legal-links"><a href="/terms/">Terms of Use</a><a href="/privacy/">Privacy Policy</a></p>
     </div>
   </footer>
 

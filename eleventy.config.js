@@ -261,6 +261,7 @@ function buildRecentAdditions(api) {
       return {
         title: event.data.title,
         url: event.url,
+        venue: vd.name || null,
         city: vd.city || null,
         country: vd.country || null,
         added: event.data.added,
