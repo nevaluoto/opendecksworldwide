@@ -1,4 +1,4 @@
-# OpenDecks.Global
+# Open Decks Worldwide
 
 A community-maintained directory of **open decks DJ events** around the world.
 Every venue and event is a markdown file; the site is a static build generated

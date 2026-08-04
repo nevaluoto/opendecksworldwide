@@ -1,6 +1,6 @@
 ---
 name: "Social Maidstone"
-address: "95 Week Street, Maidstone, ME14 1QX"
+address: "95A Week Street, Maidstone, ME14 1QX"
 city: "Maidstone"
 country: "United Kingdom"
 continent: "Europe"

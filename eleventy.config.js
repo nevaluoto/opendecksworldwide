@@ -58,7 +58,11 @@ function buildTree(api) {
       ["city", venue.data.city],
       ["venue", venue.data.name],
     ]) {
-      if (name && slugify(name) !== slugs[level]) {
+      // Skip names that romanize to nothing (e.g. all-CJK venue names) — the
+      // folder name is necessarily a hand-picked transliteration then, and
+      // there's no derivable slug to compare it against.
+      const expectedSlug = slugify(name || "");
+      if (name && expectedSlug && expectedSlug !== slugs[level]) {
         console.warn(
           `[opendecks] ${venue.inputPath}: frontmatter ${level} "${name}" does not match path segment "${slugs[level]}"`
         );
