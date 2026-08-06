@@ -2,6 +2,7 @@
 name: "Highgarden"
 address: "419 Glenwood Avenue, Raleigh, United States"
 city: "Raleigh"
+state: "NC"
 country: "United States"
 continent: "North America"
 lat: 35.7856781
