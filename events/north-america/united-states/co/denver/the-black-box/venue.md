@@ -8,6 +8,9 @@ continent: "North America"
 lat: 39.7366939
 lon: -104.9830945
 osm: https://www.openstreetmap.org/?mlat=39.7366939&mlon=-104.9830945
+links:
+  instagram: https://instagram.com/theblackbox5280
+  facebook: https://facebook.com/theblackbox5280
 ---
 
 Venue in Denver's Capitol Hill neighborhood that has hosted open decks
