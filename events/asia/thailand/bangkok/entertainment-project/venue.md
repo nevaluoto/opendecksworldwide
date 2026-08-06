@@ -1,6 +1,6 @@
 ---
 name: "Entertainment Project"
-address: "1107, Si Phraya, Bang Rak, Bangkok 10500"
+address: "1107 Charoen Krung Road, Si Phraya, Bang Rak, Bangkok 10500"
 city: "Bangkok"
 country: "Thailand"
 continent: "Asia"

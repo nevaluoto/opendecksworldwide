@@ -1,9 +1,9 @@
 ---
-title: "Open Decks at Ent Project"
+title: "Open Decks"
 status: active
-date: 2026-06-21
-time: "21:00–00:00"
-signup: "DJ registration open via Instagram DM"
+recurrence: "Every Sunday"
+date: 2026-08-09
+signup: "DM via Instagram to sign up for open decks"
 added: 2026-07-31
 ---
 

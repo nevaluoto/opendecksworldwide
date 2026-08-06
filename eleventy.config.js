@@ -44,7 +44,20 @@ function getVenueMap(api) {
 // Nested tree: continents -> countries -> cities -> venues -> events. Drives
 // the homepage grouping and the paginated location index pages. Display names
 // for locations come from each venue.md; events only carry event-specific data.
+// Eleventy hands each collection callback a fresh collectionApi per build
+// pass (including rebuilds in --serve/--watch), so caching keyed on that
+// object's identity gets memoization within a pass without needing to
+// manually invalidate on rebuild.
+const treeCache = new WeakMap();
+
 function buildTree(api) {
+  if (treeCache.has(api)) return treeCache.get(api);
+  const tree = buildTreeUncached(api);
+  treeCache.set(api, tree);
+  return tree;
+}
+
+function buildTreeUncached(api) {
   const venueByDir = getVenueMap(api);
   const venueDocs = [...venueByDir.values()];
 
