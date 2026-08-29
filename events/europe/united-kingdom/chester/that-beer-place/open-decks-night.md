@@ -2,10 +2,11 @@
 title: "Open Decks Night at That Beer Place"
 status: active
 recurrence: "First Friday of every month"
-time: "19:00 onward"
+date: 2026-12-04
+time: "19:00–23:00"
 gear: "Vinyl only"
 links:
-  facebook: https://www.facebook.com/groups/1148703193549892
+  facebook: https://www.facebook.com/events/2049468979122445/
 added: 2026-07-31
 ---
 
