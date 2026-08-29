@@ -2,10 +2,11 @@
 title: "Open Decks"
 status: active
 recurrence: "Monthly (date varies — check Facebook for the next one)"
-date: 2026-09-20
+date: 2026-09-19
 time: "20:00–01:00"
 genres: [edm]
 gear: "4x CDJ-3000 and an A9 mixer — no laptops, USB only, Rekordbox-compatible music only, BYO headphones"
+signup: "https://ecedm.com/"
 links:
   facebook: https://www.facebook.com/events/1571477731194316
 added: 2026-07-31
