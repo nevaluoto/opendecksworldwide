@@ -1,5 +1,5 @@
 ---
-title: "Open Decks"
+title: "OPEN DECKS #6 // DOKTOR'S BIRTHDAY EDITION"
 status: active
 recurrence: "Monthly (date varies — check Facebook for the next one)"
 date: 2026-09-19
