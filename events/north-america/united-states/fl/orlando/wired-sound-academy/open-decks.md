@@ -1,10 +1,12 @@
 ---
 title: "Open Decks"
 status: active
-date: 2026-08-26
+date: 2026-10-01
 time: "19:30–21:30"
 gear: "2x CDJ-3000s"
 signup: "RSVP link in Instagram, 15-minute sets"
+links:
+  instagram: https://www.instagram.com/p/Ddr8OpWIg-P/
 added: 2026-08-07
 ---
 
