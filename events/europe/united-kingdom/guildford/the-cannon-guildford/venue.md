@@ -1,6 +1,6 @@
 ---
 name: "The Cannon Guildford"
-address: "3 Portsmouth Road, Guildford, GU2 4HX, United Kingdom"
+address: "3 Portsmouth Road, Guildford, GU2 4BL, United Kingdom"
 city: "Guildford"
 country: "United Kingdom"
 continent: "Europe"

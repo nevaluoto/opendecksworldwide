@@ -1,10 +1,10 @@
 ---
 title: "Open Deck"
 status: active
-date: 2026-09-25
-time: "18:00–22:00"
+date: 2026-10-30
+time: "18:00"
 links:
-  facebook: https://www.facebook.com/events/2411665195990223
+  facebook: https://www.facebook.com/events/1774626510324191
 added: 2026-09-15
 ---
 
